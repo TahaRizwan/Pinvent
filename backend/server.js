@@ -19,8 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ["https://pinvent-4b872x0xr-taharizwanmughal-gmailcom.vercel.app/", "https://pinvent-app.vercel.app"],
-    credentials: true,
+    origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
   })
 );
 
