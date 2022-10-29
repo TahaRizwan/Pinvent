@@ -18,12 +18,17 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
-  cors({
-    origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
-  })
+    cors({
+        origin: '*',
+        credentials: true,            //access-control-allow-credentials:true
+        optionSuccessStatus: 200,
+    })
 );
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -34,7 +39,7 @@ app.use("/api/contactus", contactRoute);
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Home Page");
+    res.send("Home Page");
 });
 
 // Error Middleware
@@ -42,10 +47,10 @@ app.use(errorHandler);
 // Connect to DB and start server
 const PORT = process.env.PORT || 5000;
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server Running on port ${PORT}`);
-    });
-  })
-  .catch((err) => console.log(err));
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server Running on port ${PORT}`);
+        });
+    })
+    .catch((err) => console.log(err));
